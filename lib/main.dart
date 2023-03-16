@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:shop_app/screens/product_overview_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,30 +10,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return CupertinoApp(
       title: 'Shop App',
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Shop App'),
-      ),
-      body: const Center(
-        child: Text('shop App'),
-      ),
+      theme: const CupertinoThemeData(
+          textTheme:
+              CupertinoTextThemeData(textStyle: TextStyle(fontFamily: 'Lato')),
+          barBackgroundColor: CupertinoColors.white,
+          primaryColor: CupertinoColors.systemPurple,
+          primaryContrastingColor: CupertinoColors.activeOrange),
+      home: ProductOverviewScreen(),
     );
   }
 }
