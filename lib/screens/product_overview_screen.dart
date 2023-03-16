@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
+import '../providers/products_provider.dart';
 import '../widgets/product_item.dart';
 import '../models/product.dart';
 
@@ -40,14 +42,25 @@ class ProductOverviewScreen extends StatelessWidget {
         imageUrl:
             'https://images.unsplash.com/photo-1546054454-aa26e2b734c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80')
   ];
-
+  int counter = 0;
   @override
   Widget build(BuildContext context) {
+    final allProduts = Provider.of<Products>(context).items;
     return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Shop App'),
+      navigationBar: CupertinoNavigationBar(
+        middle: GestureDetector(
+          child: Text('Shop App'),
+          onTap: () {
+            Provider.of<Products>(context, listen: false)
+                .addProduct(loadedProducts[counter]);
+            if (counter < loadedProducts.length - 1) {
+              counter++;
+            } else {
+              counter = 0;
+            }
+          },
+        ),
       ),
-      resizeToAvoidBottomInset: false,
       child: GridView.builder(
           padding: const EdgeInsets.all(10),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -55,11 +68,11 @@ class ProductOverviewScreen extends StatelessWidget {
               childAspectRatio: 3 / 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10),
-          itemCount: loadedProducts.length,
+          itemCount: allProduts.length,
           itemBuilder: (ctx, index) => ProductItem(
-              id: loadedProducts[index].id,
-              title: loadedProducts[index].name,
-              imageUrl: loadedProducts[index].imageUrl)),
+              id: allProduts[index].id,
+              title: allProduts[index].name,
+              imageUrl: allProduts[index].imageUrl)),
     );
   }
 }
