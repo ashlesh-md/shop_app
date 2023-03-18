@@ -11,7 +11,7 @@ class ProductOverviewScreen extends StatelessWidget {
         backgroundColor: CupertinoTheme.of(context).primaryContrastingColor,
         middle: const Text('Shop App'),
       ),
-      child: ProductsGrid(),
+      child: const ProductsGrid(),
     );
   }
 }

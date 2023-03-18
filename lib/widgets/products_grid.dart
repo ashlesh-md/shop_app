@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import '../providers/product.dart';
 import '../providers/products_provider.dart';
 import '../widgets/product_item.dart';
 
@@ -8,7 +9,7 @@ class ProductsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final allProduts = Provider.of<Products>(context).items;
+    final List<Product> allProduts = Provider.of<Products>(context).items;
 
     return GridView.builder(
         padding: const EdgeInsets.all(10),
@@ -18,9 +19,9 @@ class ProductsGrid extends StatelessWidget {
             crossAxisSpacing: 10,
             mainAxisSpacing: 10),
         itemCount: allProduts.length,
-        itemBuilder: (ctx, index) => ProductItem(
-            id: allProduts[index].id,
-            title: allProduts[index].title,
-            imageUrl: allProduts[index].imageUrl));
+        itemBuilder: (ctx, index) => ChangeNotifierProvider<Product>(
+              create: (BuildContext c) => allProduts[index],
+              child: const ProductItem(),
+            ));
   }
 }
